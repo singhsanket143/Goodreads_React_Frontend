@@ -32,7 +32,6 @@ export default function Signin() {
     
     async function onFormSubmit(e) {
         e.preventDefault();
-        console.log(signinDetails);
         const response = await dispatch(signin(signinDetails));
         if(response?.payload?.data) {
             navigate("/dashboard");

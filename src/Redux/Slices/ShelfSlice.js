@@ -18,7 +18,6 @@ export const getAllBookShelves = createAsyncThunk("course/getAllBookShelves", as
         });
         return await response;
     } catch(error) {
-        console.log(error);
         toast.error("Something went wrong, cannot download bookshelves");
     }
 });
@@ -36,7 +35,23 @@ export const addBookToShelf = createAsyncThunk("course/addBookToShelf", async (d
         
         return await response;
     } catch(error) {
-        console.log(error);
+        toast.error("Something went wrong, cannot download bookshelves");
+    }
+});
+
+export const createShelf = createAsyncThunk("course/createShelf", async (data) => {
+    try {
+        const response = axiosInstance.post(`/bookshelves`, {name: data.shelfName}, {headers: {
+            'x-access-token': localStorage.getItem("token")
+        }});
+        toast.promise(response, {
+            loading: 'adding new shelf data',
+            success: 'Successfully added new shelf',
+            error: "Something went wrong"
+        });
+        
+        return await response;
+    } catch(error) {
         toast.error("Something went wrong, cannot download bookshelves");
     }
 });
@@ -52,9 +67,6 @@ const shelfSlice = createSlice({
             if(action?.payload?.data?.data) {
                 state.shelfList = action?.payload?.data?.data;
             }
-        })
-        .addCase(addBookToShelf.fulfilled, (state, action) => {
-            console.log(action);
         });
     }
 });

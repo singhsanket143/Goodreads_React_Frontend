@@ -18,7 +18,6 @@ export const signup = createAsyncThunk("auth/signup", async (data) => {
         });
         return await response;
     } catch(error) {
-        console.log(error);
         toast.error("Cannot signup, something went wrong");
     }
 });

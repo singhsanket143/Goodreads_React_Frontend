@@ -16,7 +16,6 @@ export const getAllBooks = createAsyncThunk("course/getAllBooks", async () => {
         });
         return await response;
     } catch(error) {
-        console.log(error);
         toast.error("Something went wrong, cannot download books");
     }
 });
