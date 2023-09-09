@@ -17,7 +17,7 @@ export default function Navbar() {
             </div>
             <div className="flex-none">
                 <ul className="menu menu-horizontal px-1">
-                    { authState.isLoggedIn && <li><Link>Shelfs</Link></li> }
+                    { authState.isLoggedIn && <li><Link to="/shelf">Shelfs</Link></li> }
                     { authState.isLoggedIn && <li><Link>{authState.username}</Link></li> }
                     <li>
                         <details>

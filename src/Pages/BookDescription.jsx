@@ -1,11 +1,19 @@
 import BookImage from 'Assets/Images/book.jpg';
 import Layout from "Layouts/Layout";
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import { BiUser } from 'react-icons/bi';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from "react-router-dom";
+import { addBookToShelf, getAllBookShelves } from 'Redux/Slices/ShelfSlice';
 
 export default function BookDescription() {
     const {state} = useLocation();
+    const dispatch = useDispatch();
+    const shelfState = useSelector((state) => state.shelf);
+
+    useEffect(() => {
+        dispatch(getAllBookShelves());
+    }, []);
     return (
         <Layout>
             {
@@ -39,6 +47,19 @@ export default function BookDescription() {
                             </div>
                             <div className='text-xl'>
                                 Publish Date: <span className='text-yellow-400'>{state.publishDate}</span>
+                            </div>
+                            <div>
+                            <details className="dropdown mb-32">
+                                <summary className="m-1 btn">Add to Shelf</summary>
+                                <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+                                    {shelfState.shelfList.length > 0 && shelfState.shelfList.map((shelf) => {
+                                        return <li onClick={async () => {
+                                            await dispatch(addBookToShelf({shelfName: shelf.name, bookId: state._id}));
+                                            await dispatch(getAllBookShelves());
+                                        }} className='text-white' key={shelf._id}><a>{shelf.name}</a></li>;
+                                    })}
+                                </ul>
+                                </details>
                             </div>
                         </div>  
                     </div>
